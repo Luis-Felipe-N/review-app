@@ -22,7 +22,10 @@ export default function Login() {
 
   return (
     <Form {...form}>
-      <form className='space-y-4 flex flex-col' onSubmit={handleSubmit(handleLogin)}>
+      <form
+        className="space-y-4 flex flex-col"
+        onSubmit={handleSubmit(handleLogin)}
+      >
         <FormField
           control={control}
           name="username"
@@ -62,7 +65,9 @@ export default function Login() {
           )}
         ></FormField>
 
-        <Button className='rounded-xl w-100 h-14 px-4 bg-green-700 hover:bg-green-800'>Entrar</Button>
+        <Button className="rounded-xl w-100 h-14 px-4 bg-green-700 hover:bg-green-800">
+          Entrar
+        </Button>
       </form>
     </Form>
   )
