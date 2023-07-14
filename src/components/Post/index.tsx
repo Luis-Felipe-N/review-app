@@ -1,11 +1,16 @@
 'use client'
 
 import { Heart } from '@phosphor-icons/react'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { Button } from './ui/button'
-import { Card, CardContent, CardHeader } from './ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Button } from '../ui/button'
+import { Card, CardContent, CardHeader } from '../ui/card'
+import { SliderRating } from '../SliderRating'
 
-export function Post() {
+interface PostProps {
+  image: string
+}
+
+export function Post({ image }: PostProps) {
   const likes = Array.from(Array(3).keys())
 
   return (
@@ -20,24 +25,20 @@ export function Post() {
           <small className="text-zinc-400 text-xs">10 minutos atrás</small>
         </div>
       </CardHeader>
-      <CardContent>
-        <img
-          className="rounded-xl"
-          src="https://i.imgur.com/pMLpL8G.jpeg"
-          alt=""
-        />
+      <CardContent className="space-y-4">
+        <img className="rounded-xl" src={image} alt="" />
 
-        <div className='mt-4'>
+        <SliderRating />
+
+        <div className="mt-4">
           <div className="flex items-center gap-1">
-            <Heart size={20} weight="fill" className='text-pink-700' />
+            <Heart size={20} weight="fill" className="text-pink-700" />
             <ul className="flex">
               {likes.map((like, index) => (
                 <li
                   key={like}
                   style={{
-                    transform: `translateX(-${
-                      index * 15
-                    }px)`,
+                    transform: `translateX(-${index * 15}px)`,
                   }}
                 >
                   <Avatar className="w-8 h-8 border-zinc-950 border-4">
