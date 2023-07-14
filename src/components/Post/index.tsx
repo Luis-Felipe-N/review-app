@@ -25,19 +25,6 @@ export function Post({ image }: PostProps) {
           <small className="text-zinc-400 text-xs">10 minutos atrás</small>
         </div>
       </CardHeader>
-<<<<<<< HEAD
-      <CardContent>
-        <img
-          className="rounded-xl"
-          src="https://i.imgur.com/pMLpL8G.jpeg"
-          alt=""
-        />
-
-        <div className='mt-4'>
-            <SliderRating />
-          <div className="flex items-center gap-1">
-            <Heart size={20} weight="fill" className='text-pink-700' />
-=======
       <CardContent className="space-y-4">
         <img className="rounded-xl" src={image} alt="" />
 
@@ -46,19 +33,12 @@ export function Post({ image }: PostProps) {
         <div className="mt-4">
           <div className="flex items-center gap-1">
             <Heart size={20} weight="fill" className="text-pink-700" />
->>>>>>> 13e98917fb069739f45760d673d70dc717d863ba
             <ul className="flex">
               {likes.map((like, index) => (
                 <li
                   key={like}
                   style={{
-<<<<<<< HEAD
-                    transform: `translateX(-${
-                      index * 15
-                    }px)`,
-=======
                     transform: `translateX(-${index * 15}px)`,
->>>>>>> 13e98917fb069739f45760d673d70dc717d863ba
                   }}
                 >
                   <Avatar className="w-8 h-8 border-zinc-950 border-4">
