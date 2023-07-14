@@ -24,26 +24,26 @@ export function Header() {
         <NavigationMenu>
           <NavigationMenuList className="space-x-6">
             <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
+              <Link href="/" legacyBehavior passHref>
                 <NavigationMenuLink className={''}>Home</NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
+              <Link href="/recomendados" legacyBehavior passHref>
                 <NavigationMenuLink className={''}>
                   Recomendados
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
+              <Link href="/como-importar" legacyBehavior passHref>
                 <NavigationMenuLink className={''}>
                   Como importar?
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
+              <Link href="/ofertas" legacyBehavior passHref>
                 <NavigationMenuLink className={'flex items-center '}>
                   Ofertas
                   <Fire weight="bold" width={20} className=" text-purple-400" />
@@ -62,7 +62,7 @@ export function Header() {
             </Avatar>
           </Link>
           <Link href={'/perfil/review'} className="flex items-center gap-2">
-            <Button className='bg-purple-600 hover:bg-purple-700 text-zinc-50'>
+            <Button className="bg-purple-600 hover:bg-purple-700 text-zinc-50">
               Criar um review
             </Button>
           </Link>
