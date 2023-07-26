@@ -2,9 +2,8 @@
 
 import { Heart } from '@phosphor-icons/react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Button } from '../ui/button'
 import { Card, CardContent, CardHeader } from '../ui/card'
-import { SliderRating } from '../SliderRating'
+import { SliderRating } from './SliderRating'
 
 interface PostProps {
   image: string

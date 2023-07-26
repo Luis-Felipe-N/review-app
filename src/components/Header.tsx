@@ -3,9 +3,12 @@
 import { Fire } from '@phosphor-icons/react'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Button } from '../ui/button'
-import { Input } from '../ui/input'
+import { signIn, useSession } from 'next-auth/react'
+import { ModalCreateAccount } from './auth/ModalCreateAccount'
+import { ModalLogin } from './auth/ModalLogin'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { Button } from './ui/button'
+import { Input } from './ui/input'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,9 +16,14 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from '../ui/navigation-menu'
+} from './ui/navigation-menu'
+import LogIn from '@/app/auth/login/page'
 
 export function Header() {
+  const session = useSession()
+
+  console.log(session)
+
   return (
     <header className="bg-zinc-900">
       <div className="container mx-auto h-20 flex items-center justify-between">
@@ -55,17 +63,26 @@ export function Header() {
 
         <div className="flex space-x-4 items-center">
           <Search />
-          <Link href={'/'} className="flex items-center gap-2">
-            <Avatar className="w-10 h-10">
-              <AvatarImage src="https://doodleipsum.com/700/avatar-2?i=de7ef159acaa49833815766098126673" />
-              <AvatarFallback>LF</AvatarFallback>
-            </Avatar>
-          </Link>
-          <Link href={'/perfil/review'} className="flex items-center gap-2">
-            <Button className="bg-purple-600 hover:bg-purple-700 text-zinc-50">
-              Criar um review
-            </Button>
-          </Link>
+          { session.status == "authenticated" ? (
+            <>
+              <Link href={'/'} className="flex items-center gap-2">
+                <Avatar className="w-10 h-10">
+                  <AvatarImage src="https://doodleipsum.com/700/avatar-2?i=de7ef159acaa49833815766098126673" />
+                  <AvatarFallback>LF</AvatarFallback>
+                </Avatar>
+              </Link> 
+              <Link href={'/create-review'} className="flex items-center gap-2">
+                <Button className="bg-purple-600 hover:bg-purple-700 text-zinc-50">
+                  Criar um review
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <div>
+              <ModalLogin />
+              <ModalCreateAccount />
+            </div>
+          )}
         </div>
       </div>
     </header>
