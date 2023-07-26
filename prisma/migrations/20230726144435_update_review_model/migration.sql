@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `reviews` ADD COLUMN `bacth` VARCHAR(191) NULL,
+    ADD COLUMN `link` VARCHAR(191) NULL,
+    ADD COLUMN `note` VARCHAR(191) NULL;

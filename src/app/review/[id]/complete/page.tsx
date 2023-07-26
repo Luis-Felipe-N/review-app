@@ -16,46 +16,54 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { ErrorMessage } from '@/components/Form/ErrorMessage'
 import { MultiStep } from '@/components/MultiStep'
-import { ArrowRight } from '@phosphor-icons/react'
-import { redirect, useRouter } from 'next/navigation'
+import { ArrowArcRight, ArrowRight } from '@phosphor-icons/react'
+import { useRouter } from 'next/navigation'
+import { Textarea } from '@/components/ui/textarea'
 import { api } from '@/lib/api'
-import { useSession } from 'next-auth/react'
 
-const preProductFormShema = z.object({
-  name: z.string().nonempty({ message: 'Nome é obrigatorio' }),
-  price: z.number(),
-  weight: z.number(),
-  albumLink: z.string()
+interface CreateReviewProps {
+  params: {
+    id: string
+  }
+}
+
+const completeProductFormShema = z.object({
+  link: z.string(),
+  batch: z.string(),
+  description: z.string(),
 })
 
-type PreProductFormData = z.infer<typeof preProductFormShema>
+type PreProductFormData = z.infer<typeof completeProductFormShema>
 
-export default function CreateReview() {
-  const session = useSession()
-
-  if (session.status == "unauthenticated") return redirect('/')
-
+export default function CreateReview({ params }: CreateReviewProps) {
   const form = useForm<PreProductFormData>({
-    resolver: zodResolver(preProductFormShema),
+    resolver: zodResolver(completeProductFormShema),
   })
 
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors, isSubmitting },
   } = form
+
   const router = useRouter()
 
   async function handleCreateProduct(data: PreProductFormData) {
-    const { name, price, weight, albumLink } = data
-    const responseData = await api.post('users/create-review/', {
-      name,
-      price,
-      weight,
-      albumLink,
-      userId: session.data?.user.id
-    })
-    router.push('create-review/complete')
+    const { batch, link, description } = data
+
+    try {
+      const responseData = await api.put(`review/${params.id}/complete/`, {
+        batch, link, description,
+      })
+
+      router.push(`/review/${responseData.data.review.id}/`)
+    } catch (error) {
+      setError('root', {
+        message: "Ocorreu algum erro em completar sua review",
+      })
+    }
+    // router.push('create-review/complete')
   }
 
   return (
@@ -68,7 +76,7 @@ export default function CreateReview() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <MultiStep size={2} />
+          <MultiStep size={2} currentStep={2} />
         </CardContent>
       </Card>
 
@@ -81,60 +89,46 @@ export default function CreateReview() {
             <div className="grid w-full items-center gap-4 space-y-2">
               <div className="flex flex-col space-y-1.5">
                 <Label className="space-y-2">
-                  <span>Adicione imagem</span>
+                  <span>
+                    Batch <small>(opcional)</small>
+                  </span>
                   <Input
-                    {...register('albumLink')}
+                    {...register('batch')}
                     className="h-12 px-4"
-                    placeholder="Nome do produto"
+                    placeholder="Informe a batch do produto"
                   />
-                  {errors.albumLink && (
-                    <ErrorMessage message={errors.albumLink.message} />
+                  {errors.batch && (
+                    <ErrorMessage message={errors.batch.message} />
                   )}
                 </Label>
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label className="space-y-2">
-                  <span>Nome</span>
+                  <span>
+                    Link <small>(opcional)</small>
+                  </span>
                   <Input
-                    {...register('name')}
-                    id="name"
+                    {...register('link')}
                     className="h-12 px-4"
-                    placeholder="Nome do produto"
+                    placeholder="Link do produto"
                   />
-                  {errors.name && (
-                    <ErrorMessage message={errors.name.message} />
+                  {errors.link && (
+                    <ErrorMessage message={errors.link.message} />
                   )}
                 </Label>
               </div>
-
               <div className="flex flex-col space-y-1.5">
                 <Label className="space-y-2">
-                  <span>Preço</span>
-                  <Input
-                    {...register('price', { valueAsNumber: true })}
-                    type="number"
-                    id="preco"
+                  <span>
+                    Cometário <small>(opcional)</small>
+                  </span>
+                  <Textarea
+                    {...register('description')}
                     className="h-12 px-4"
-                    placeholder="Preço do produto"
+                    placeholder="Diga o que achou do produto"
                   />
-                  {errors.price && (
-                    <ErrorMessage message={errors.price.message} />
-                  )}
-                </Label>
-              </div>
-
-              <div className="flex flex-col space-y-1.5">
-                <Label className="space-y-2">
-                  <span>Peso</span>
-                  <Input
-                    {...register('weight', { valueAsNumber: true })}
-                    type="number"
-                    id="peso"
-                    className="h-12 px-4"
-                    placeholder="Peso do produto em gramas"
-                  />
-                  {errors.weight && (
-                    <ErrorMessage message={errors.weight.message} />
+                  {errors.description && (
+                    <ErrorMessage message={errors.description.message} />
                   )}
                 </Label>
               </div>
@@ -150,8 +144,7 @@ export default function CreateReview() {
                 type="submit"
                 className="w-full bg-purple-500 hover:bg-purple-600 space-x-2 text-zinc-50 font-bold"
               >
-                <span>Proximo</span>
-                <ArrowRight />
+                <span>Finalizar</span>
               </Button>
             )}
           </form>

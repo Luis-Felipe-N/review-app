@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import NextAuthSessionProvider from './provider/sessionProvider'
+import { QueryProvider } from './provider/useQueryProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,10 +22,12 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${inter.className}`}>
         <NextAuthSessionProvider>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <Header />
-            {children}
-          </ThemeProvider>
+          <QueryProvider>
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+              <Header />
+              {children}
+            </ThemeProvider>
+          </QueryProvider>
         </NextAuthSessionProvider>
       </body>
     </html>

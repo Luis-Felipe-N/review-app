@@ -73,6 +73,9 @@ model Review {
   title       String
   description String?
   thumbnail   String?
+  link        String?
+  bacth       String?
+  rating      Int      @default(0)
   album_link  String
   price       Float
   weight      Float

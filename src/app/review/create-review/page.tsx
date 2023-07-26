@@ -16,19 +16,27 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { ErrorMessage } from '@/components/Form/ErrorMessage'
 import { MultiStep } from '@/components/MultiStep'
-import { ArrowArcRight, ArrowRight } from '@phosphor-icons/react'
-import { useRouter } from 'next/navigation'
-import { Textarea } from '@/components/ui/textarea'
+import { ArrowRight } from '@phosphor-icons/react'
+import { redirect, useRouter } from 'next/navigation'
+import { api } from '@/lib/api'
+import { useSession } from 'next-auth/react'
+import router from 'next/router'
+import { AxiosError } from 'axios'
 
 const preProductFormShema = z.object({
-  link: z.string(),
-  batch: z.string(),
-  note: z.string(),
+  name: z.string().nonempty({ message: 'Nome é obrigatorio' }),
+  price: z.number(),
+  weight: z.number(),
+  albumLink: z.string()
 })
 
 type PreProductFormData = z.infer<typeof preProductFormShema>
 
 export default function CreateReview() {
+  const session = useSession()
+
+  if (session.status == "unauthenticated") return redirect('/')
+
   const form = useForm<PreProductFormData>({
     resolver: zodResolver(preProductFormShema),
   })
@@ -36,12 +44,32 @@ export default function CreateReview() {
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors, isSubmitting },
   } = form
   const router = useRouter()
 
-  function handleCreateProduct(data: PreProductFormData) {
-    router.push('create-review/complete')
+  async function handleCreateProduct(data: PreProductFormData) {
+    const { name, price, weight, albumLink } = data
+
+    try {
+      const responseData = await api.post('review/create-review/', {
+        name,
+        price,
+        weight,
+        albumLink,
+        userId: session.data?.user.id
+      })
+
+      console.log(responseData)
+
+      router.push(`/review/${responseData.data.review.id}/complete`)
+    } catch (error) {
+      console.log(error)
+      setError('root', {
+        message: "Ocorreu algum erro em criar sua review",
+      })
+    }
   }
 
   return (
@@ -52,9 +80,10 @@ export default function CreateReview() {
           <CardDescription>
             Crie um review para que outros possam analisar
           </CardDescription>
+          {errors.root && <ErrorMessage message={errors.root.message} />}
         </CardHeader>
         <CardContent>
-          <MultiStep size={2} currentStep={2} />
+          <MultiStep size={2} />
         </CardContent>
       </Card>
 
@@ -67,46 +96,60 @@ export default function CreateReview() {
             <div className="grid w-full items-center gap-4 space-y-2">
               <div className="flex flex-col space-y-1.5">
                 <Label className="space-y-2">
-                  <span>
-                    Batch <small>(opcional)</small>
-                  </span>
+                  <span>Adicione imagem</span>
                   <Input
-                    {...register('batch')}
+                    {...register('albumLink')}
                     className="h-12 px-4"
-                    placeholder="Informe a batch do produto"
+                    placeholder="Nome do produto"
                   />
-                  {errors.batch && (
-                    <ErrorMessage message={errors.batch.message} />
+                  {errors.albumLink && (
+                    <ErrorMessage message={errors.albumLink.message} />
                   )}
                 </Label>
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label className="space-y-2">
-                  <span>
-                    Link <small>(opcional)</small>
-                  </span>
+                  <span>Nome</span>
                   <Input
-                    {...register('link')}
+                    {...register('name')}
+                    id="name"
                     className="h-12 px-4"
-                    placeholder="Link do produto"
+                    placeholder="Nome do produto"
                   />
-                  {errors.link && (
-                    <ErrorMessage message={errors.link.message} />
+                  {errors.name && (
+                    <ErrorMessage message={errors.name.message} />
                   )}
                 </Label>
               </div>
+
               <div className="flex flex-col space-y-1.5">
                 <Label className="space-y-2">
-                  <span>
-                    Cometário <small>(opcional)</small>
-                  </span>
-                  <Textarea
-                    {...register('note')}
+                  <span>Preço</span>
+                  <Input
+                    {...register('price', { valueAsNumber: true })}
+                    type="number"
+                    id="preco"
                     className="h-12 px-4"
-                    placeholder="Diga o que achou do produto"
+                    placeholder="Preço do produto"
                   />
-                  {errors.note && (
-                    <ErrorMessage message={errors.note.message} />
+                  {errors.price && (
+                    <ErrorMessage message={errors.price.message} />
+                  )}
+                </Label>
+              </div>
+
+              <div className="flex flex-col space-y-1.5">
+                <Label className="space-y-2">
+                  <span>Peso</span>
+                  <Input
+                    {...register('weight', { valueAsNumber: true })}
+                    type="number"
+                    id="peso"
+                    className="h-12 px-4"
+                    placeholder="Peso do produto em gramas"
+                  />
+                  {errors.weight && (
+                    <ErrorMessage message={errors.weight.message} />
                   )}
                 </Label>
               </div>
@@ -122,7 +165,8 @@ export default function CreateReview() {
                 type="submit"
                 className="w-full bg-purple-500 hover:bg-purple-600 space-x-2 text-zinc-50 font-bold"
               >
-                <span>Finalizar</span>
+                <span>Proximo</span>
+                <ArrowRight />
               </Button>
             )}
           </form>

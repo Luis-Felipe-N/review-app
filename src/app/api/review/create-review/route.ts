@@ -12,7 +12,6 @@ const preProductFormShema = z.object({
 
 export async function POST(request: NextRequest, res: NextResponse) {
   const body = await request.json()
-  console.log(body)
   const { name, price, weight, userId, albumLink } = preProductFormShema.parse(body)
 
   const review = await prisma.review.create({

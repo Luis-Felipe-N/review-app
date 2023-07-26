@@ -71,7 +71,7 @@ export function Header() {
                   <AvatarFallback>LF</AvatarFallback>
                 </Avatar>
               </Link> 
-              <Link href={'/create-review'} className="flex items-center gap-2">
+              <Link href={'/review/create-review'} className="flex items-center gap-2">
                 <Button className="bg-purple-600 hover:bg-purple-700 text-zinc-50">
                   Criar um review
                 </Button>

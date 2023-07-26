@@ -1,31 +1,36 @@
 'use client'
 
+import { Review } from '@/@types'
+import { getThumbnail } from '@/lib/imgur/getThumbnail'
+import { formatDistanceDate } from '@/lib/utils'
 import { Heart } from '@phosphor-icons/react'
+import Link from 'next/link'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Card, CardContent, CardHeader } from '../ui/card'
 import { SliderRating } from './SliderRating'
 
 interface PostProps {
-  image: string
+  review: Review
 }
 
-export function Post({ image }: PostProps) {
+export function Post({ review }: PostProps) {
   const likes = Array.from(Array(3).keys())
-
+  console.log(getThumbnail(review.album_link))
   return (
+    <Link href={`/review/${review.id}/`}>
     <Card className="w-96 rounded-2xl border-zinc-900 hover:border-purple-600 border-2">
       <CardHeader className="flex gap-2 flex-row">
         <Avatar className="w-12 h-12">
-          <AvatarImage src="https://doodleipsum.com/700/avatar-2?i=de7ef159acaa49833815766098126673" />
-          <AvatarFallback>LF</AvatarFallback>
+          <AvatarImage src={review.user.avatar_url} />
+          <AvatarFallback>{ review.user.name.slice(0, 2) }</AvatarFallback>
         </Avatar>
         <div className="flex flex-col">
-          <strong className="text-sm">NB 2002r protection pack sea salt</strong>
-          <small className="text-zinc-400 text-xs">10 minutos atrás</small>
+          <strong className="text-sm">{ review.title }</strong>
+          <small className="text-zinc-400 text-xs">{formatDistanceDate(review.created_at)}</small>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <img className="rounded-xl" src={image} alt="" />
+        <img className="rounded-xl" src={review.album_link} alt="" />
 
         <SliderRating />
 
@@ -54,5 +59,6 @@ export function Post({ image }: PostProps) {
         </div>
       </CardContent>
     </Card>
+    </Link>
   )
 }
