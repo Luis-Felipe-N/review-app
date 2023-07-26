@@ -1,8 +1,4 @@
 import axios from "axios";
+import ImgurClient from "imgur";
 
-export const imgur = axios.create({
-  baseURL: 'https://api.imgur.com/3/',
-  headers: {
-    "Authorization": `Client-ID ${process.env.NEXT_PUBLIC_IMGUR_CLIENT_ID}`
-  }
-})
+export const imgur = new ImgurClient({clientId: process.env.NEXT_PUBLIC_IMGUR_CLIENT_ID})

@@ -2,9 +2,11 @@
 
 import { Review } from '@/@types'
 import { getThumbnail } from '@/lib/imgur/getThumbnail'
-import { formatDistanceDate } from '@/lib/utils'
+import { formatDistanceDate } from '@/utils'
 import { Heart } from '@phosphor-icons/react'
+import axios from 'axios'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Card, CardContent, CardHeader } from '../ui/card'
 import { SliderRating } from './SliderRating'
@@ -15,7 +17,15 @@ interface PostProps {
 
 export function Post({ review }: PostProps) {
   const likes = Array.from(Array(3).keys())
-  console.log(getThumbnail(review.album_link))
+  // console.log(getThumbnail(review.album_link))
+  // useEffect(() => {
+  //   axios({  
+  //     method: 'get',
+  //     url: 'https://api.imgur.com/3/album/IpHd6yc/images',
+  //     headers: { 'authorization': 'Client-ID ' + process.env.NEXT_PUBLIC_IMGUR_CLIENT_ID }
+  //   }).then((response) => { console.log(response) })
+  // }, [])
+
   return (
     <Link href={`/review/${review.id}/`}>
     <Card className="w-96 rounded-2xl border-zinc-900 hover:border-purple-600 border-2">
@@ -30,7 +40,7 @@ export function Post({ review }: PostProps) {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <img className="rounded-xl" src={review.album_link} alt="" />
+        <img className="rounded-xl" src={review.thumbnail} alt="" />
 
         <SliderRating />
 
