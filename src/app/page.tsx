@@ -12,7 +12,7 @@ export default function Home() {
     async () => {
       const response = await api.get('review')
       return response.data.reviews
-    });
+  });
 
     console.log(reviews)
 

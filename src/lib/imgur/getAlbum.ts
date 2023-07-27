@@ -1,6 +1,6 @@
 import { imgur } from ".";
 
-export async function getThumbnail(albumLink: string){
+export async function getAlbum(albumLink: string){
   const albumHash = albumLink.split('/')[albumLink.split('/').length - 1]
 
   const { data: album } = await imgur.getAlbum(albumHash)
