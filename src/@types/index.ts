@@ -1,3 +1,18 @@
+interface User {
+  id: string
+  username: string
+  name: string
+  email: string
+  avatar_url: string
+}
+
+export interface Rating {
+  type: "bad" | "good"
+  id: "bad" | "good"
+
+  user: User
+}
+
 export interface Review {
   id: string
   title: string
@@ -5,18 +20,14 @@ export interface Review {
   thumbnail?: string
   link?: string
   bacth?: string
-  rating: number
   album_link: string
   price: number
   weight: number
   created_at: Date
 
-  user: {
-    id: string
-    username: string
-    name: string
-    email: string
-    avatar_url: string
-  }
+  user: User
+
+  comments: []
+  ratings: Rating[]
   // user_id String
 }

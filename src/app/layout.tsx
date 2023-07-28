@@ -1,6 +1,6 @@
-import { Header } from '@/components/Header'
+import { Header } from '@/app/components/Header'
 import type { Metadata } from 'next'
-import { ThemeProvider } from '@/components/theme-provider'
+import { ThemeProvider } from '@/app/components/theme-provider'
 import { QueryProvider } from './provider/useQueryProvider'
 import NextAuthSessionProvider from './provider/sessionProvider'
 

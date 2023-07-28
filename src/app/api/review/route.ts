@@ -28,6 +28,8 @@ export async function GET(request: NextRequest) {
           avatar_url: true
         }
       },
+      comments: true,
+      ratings: true
     },
   })
 

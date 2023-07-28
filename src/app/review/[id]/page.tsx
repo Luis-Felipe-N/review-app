@@ -1,13 +1,13 @@
 // 'use client'
 
 import { Review } from "@/@types";
+import { GridImages } from "@/app/components/review/GridImages";
+import { Rating } from "@/app/components/review/Rating";
+import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/ui/avatar";
+import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
 import { api } from "@/lib/api";
-import { imgur } from "@/lib/imgur";
-import { getAlbum } from "@/lib/imgur/getAlbum";
-import { prisma } from "@/lib/prisma"
-import { useQuery } from "@tanstack/react-query";
-import { data } from "autoprefixer";
-import Image from "next/image";
+import { formatDistanceDate } from "@/utils";
+import { AxiosError } from "axios";
 
 interface ReviewProps {
   params: {
@@ -20,7 +20,8 @@ async function getReview(reviewId: string): Promise<Review | Error> {
     const { data } = await api.get('review/' + reviewId)
     return data.data.review
   } catch (error) {
-    return new Error(error.response.data.message) 
+    const messageError = error instanceof AxiosError ? error.response?.data.message : 'Ocorreu algum erro'
+    return new Error(messageError) 
   }
 }
 
@@ -36,40 +37,46 @@ export default async function Review({params}: ReviewProps) {
     )
   }
 
-  const album = await getAlbum(review.album_link)
-
   return (
     <div className="flex container mx-auto min-h-full  justify-center py-12 gap-4">
       <div className="w-full">
-        <ul>
-          { album.images.map(image => (
-            <li>
-              <img
-                src={image.link}
-                alt=""
-                width={50}
-                height={50}
-              />
-            </li>
-          ))}
-        </ul>
+        <GridImages review={review} />
         <div className="p-4 mt-4 bg-zinc-900 rounded-xl">
-          <h1 className="text-xl">{review.title}</h1>
-          <div className="mt-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl">{review.title}</h1>
+            <Rating review={review} />
+          </div>
+          <div>
             <strong>Comentário sobre o produto</strong>
             <p className="text-zinc-200">{review.description}</p>
           </div>
-          <div>
-            <button>
-              Gostei
-            </button>
-            <button>
-              Gostei
-            </button>
-          </div>
         </div>
       </div>
-      <div className="w-96">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</div>
+      <div className="w-1/3 bg-zinc-900 rounded-xl p-4">
+        <ul>
+          <li>
+            <Card className="bg-zinc-800 rounded-xl">
+              <CardHeader className="flex-row gap-2 pb-2">
+                <Avatar className="w-10 h-10">
+                  <AvatarImage src={review.user.avatar_url} />
+                  <AvatarFallback>{ review.user.name.slice(0, 2) }</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <strong className="text-sm">{ review.title }</strong>
+                  <small className="text-zinc-400 text-xs">{formatDistanceDate(review.created_at)}</small>
+                </div>
+              </CardHeader>
+            <CardContent>
+              <p className="text-zinc-200">
+                tênis lindo irmão, brabo
+                hahahhahaha mas eai
+                eu ia pegar um black cat
+              </p>
+            </CardContent>
+            </Card>
+          </li>
+        </ul>
+      </div>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { NextAuthOptions } from 'next-auth'
+import { NextAuthOptions, User } from 'next-auth'
 
 import { compare } from 'bcryptjs'
 import CredentialsProvider from 'next-auth/providers/credentials'
@@ -50,7 +50,29 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ session, user, token }) {
-      const userSession = { ...session.user, id: token.sub!}
+      const userPrisma = await prisma.user.findUnique({
+        where: {
+          id: token.sub
+        }
+      })
+
+      if (userPrisma) {
+        const userSession: User = {
+          ...session.user, 
+          id: userPrisma.id, 
+          name: userPrisma.name,
+          username: userPrisma.username,
+          avatar_url: userPrisma?.avatar_url || '',
+          email: userPrisma?.email || ''
+        }
+        session.user = userSession
+        return session
+      }
+
+      const userSession: User = {
+        ...session.user, 
+        id: token.sub!
+      }
       session.user = userSession
       return session
     },

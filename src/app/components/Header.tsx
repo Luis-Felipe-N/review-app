@@ -3,21 +3,17 @@
 import { Fire } from '@phosphor-icons/react'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
-import { signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { ModalCreateAccount } from './auth/ModalCreateAccount'
 import { ModalLogin } from './auth/ModalLogin'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
-import { Input } from './ui/input'
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from './ui/navigation-menu'
-import LogIn from '@/app/auth/login/page'
 
 export function Header() {
   const session = useSession()
@@ -67,8 +63,8 @@ export function Header() {
             <>
               <Link href={'/'} className="flex items-center gap-2">
                 <Avatar className="w-10 h-10">
-                  <AvatarImage src="https://doodleipsum.com/700/avatar-2?i=de7ef159acaa49833815766098126673" />
-                  <AvatarFallback>LF</AvatarFallback>
+                  <AvatarImage src={session.data.user.avatar_url} />
+                  <AvatarFallback>{session.data.user.name.slice(0, 2)}</AvatarFallback>
                 </Avatar>
               </Link> 
               <Link href={'/review/create-review'} className="flex items-center gap-2">
@@ -78,7 +74,7 @@ export function Header() {
               </Link>
             </>
           ) : (
-            <div>
+            <div className='space-x-2'>
               <ModalLogin />
               <ModalCreateAccount />
             </div>

@@ -1,4 +1,4 @@
-import { getThumbnail } from '@/lib/imgur/getThumbnail'
+import { getAlbum } from '@/lib/imgur/getAlbum'
 import { prisma } from '@/lib/prisma'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest, res: NextResponse) {
   const body = await request.json()
   const { name, price, weight, userId, albumLink } = preProductFormShema.parse(body)
 
-  const album = await getThumbnail(albumLink)
+  const album = await getAlbum(albumLink)
   console.log
   const thumbnail = album.images[0].link
   const review = await prisma.review.create({

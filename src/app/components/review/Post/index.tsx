@@ -1,14 +1,11 @@
 'use client'
 
 import { Review } from '@/@types'
-import { getThumbnail } from '@/lib/imgur/getThumbnail'
 import { formatDistanceDate } from '@/utils'
-import { Heart } from '@phosphor-icons/react'
-import axios from 'axios'
+import { ChatTeardropDots } from '@phosphor-icons/react'
 import Link from 'next/link'
-import { useEffect } from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Card, CardContent, CardHeader } from '../ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar'
+import { Card, CardContent, CardHeader } from '../../ui/card'
 import { SliderRating } from './SliderRating'
 
 interface PostProps {
@@ -16,15 +13,6 @@ interface PostProps {
 }
 
 export function Post({ review }: PostProps) {
-  const likes = Array.from(Array(3).keys())
-  // console.log(getThumbnail(review.album_link))
-  // useEffect(() => {
-  //   axios({  
-  //     method: 'get',
-  //     url: 'https://api.imgur.com/3/album/IpHd6yc/images',
-  //     headers: { 'authorization': 'Client-ID ' + process.env.NEXT_PUBLIC_IMGUR_CLIENT_ID }
-  //   }).then((response) => { console.log(response) })
-  // }, [])
 
   return (
     <Link href={`/review/${review.id}/`}>
@@ -41,14 +29,13 @@ export function Post({ review }: PostProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         <img className="rounded-xl" src={review.thumbnail} alt="" />
-
-        <SliderRating />
+        <SliderRating ratings={review.ratings} />
 
         <div className="mt-4">
           <div className="flex items-center gap-1">
-            <Heart size={20} weight="fill" className="text-pink-700" />
+            <ChatTeardropDots size={20} weight="fill" className="text-zinc-400" />
             <ul className="flex">
-              {likes.map((like, index) => (
+              {review.comments.length > 0 ? review.comments.map((like, index) => (
                 <li
                   key={like}
                   style={{
@@ -63,7 +50,9 @@ export function Post({ review }: PostProps) {
                     <AvatarFallback>LF</AvatarFallback>
                   </Avatar>
                 </li>
-              ))}
+              )) : (
+                <small className="text-zinc-400">Nenhum comentário</small>
+              )}
             </ul>
           </div>
         </div>

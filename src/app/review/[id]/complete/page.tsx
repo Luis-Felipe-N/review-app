@@ -1,25 +1,25 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/app/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+} from '@/app/components/ui/card'
+import { Input } from '@/app/components/ui/input'
+import { Label } from '@/app/components/ui/label'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
-import { ErrorMessage } from '@/components/Form/ErrorMessage'
-import { MultiStep } from '@/components/MultiStep'
+import { ErrorMessage } from '@/app/components/Form/ErrorMessage'
+import { MultiStep } from '@/app/components/MultiStep'
 import { ArrowArcRight, ArrowRight } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
-import { Textarea } from '@/components/ui/textarea'
-import { api } from '@/lib/api'
+import { Textarea } from '@/app/components/ui/textarea'
+import { api, apiClient } from '@/lib/api'
 
 interface CreateReviewProps {
   params: {
@@ -53,7 +53,7 @@ export default function CreateReview({ params }: CreateReviewProps) {
     const { batch, link, description } = data
 
     try {
-      const responseData = await api.put(`review/${params.id}/complete/`, {
+      const responseData = await apiClient.put(`review/${params.id}/complete/`, {
         batch, link, description,
       })
 

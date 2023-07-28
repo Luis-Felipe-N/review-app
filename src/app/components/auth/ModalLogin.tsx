@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button } from '@/app/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -7,12 +7,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { api } from '@/lib/api'
+} from '@/app/components/ui/dialog'
+import { Input } from '@/app/components/ui/input'
+import { Label } from '@/app/components/ui/label'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { data } from 'autoprefixer'
 import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -40,18 +38,12 @@ export function ModalLogin() {
     resolver: zodResolver(loginFormSchema),
   })
 
-  function handleCloseModal() {
-
-  }
-
   async function handleLogin(data: LoginFormData) {
     const resposeData = await signIn('credentials', {
       username: data.username,
       password: data.password,
       redirect: false,
     })
-
-    console.log(resposeData)
 
     if (resposeData?.error == 'CredentialsSignin') {
       setError('root', {

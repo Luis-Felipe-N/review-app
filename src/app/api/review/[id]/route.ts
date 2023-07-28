@@ -7,6 +7,17 @@ export async function GET(request: Request, { params }: { params: { id: string }
     where: {
       id,
     },
+    include: {
+      user: {
+        select: {
+          name: true,
+          username: true,
+          avatar_url: true
+        }
+      },
+      comments: true,
+      ratings: true
+    },
   });
 
   if (!review) {

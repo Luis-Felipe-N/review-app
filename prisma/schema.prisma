@@ -32,6 +32,8 @@ model User {
   accounts Account[]
   sessions Session[]
   reviews  Review[]
+  comments Comment[]
+  ratings  Rating[]
 
   @@map("users")
 }
@@ -75,14 +77,50 @@ model Review {
   thumbnail   String?
   link        String?
   bacth       String?
-  rating      Int      @default(0)
   album_link  String
   price       Float
   weight      Float
   created_at  DateTime @default(now())
 
+  user     User      @relation(fields: [user_id], references: [id])
+  user_id  String
+  comments Comment[]
+  ratings  Rating[]
+
+  @@index([user_id])
+  @@map("reviews")
+}
+
+model Comment {
+  id         String   @id @default(uuid())
+  content    String
+  redLike    Int      @default(0)
+  greenLike  Int      @default(0)
+  created_at DateTime @default(now())
+
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
 
-  @@map("reviews")
+  review    Review @relation(fields: [review_id], references: [id])
+  review_id String
+
+  @@index([user_id])
+  @@index([review_id])
+  @@map("comments")
+}
+
+model Rating {
+  id         String   @id @default(uuid())
+  type       String
+  created_at DateTime @default(now())
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  review    Review @relation(fields: [review_id], references: [id])
+  review_id String
+
+  @@index([user_id])
+  @@index([review_id])
+  @@map("ratings")
 }

@@ -1,27 +1,25 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/app/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+} from '@/app/components/ui/card'
+import { Input } from '@/app/components/ui/input'
+import { Label } from '@/app/components/ui/label'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
-import { ErrorMessage } from '@/components/Form/ErrorMessage'
-import { MultiStep } from '@/components/MultiStep'
+import { ErrorMessage } from '@/app/components/Form/ErrorMessage'
+import { MultiStep } from '@/app/components/MultiStep'
 import { ArrowRight } from '@phosphor-icons/react'
 import { redirect, useRouter } from 'next/navigation'
-import { api } from '@/lib/api'
+import { api, apiClient } from '@/lib/api'
 import { useSession } from 'next-auth/react'
-import router from 'next/router'
-import { AxiosError } from 'axios'
 
 const preProductFormShema = z.object({
   name: z.string().nonempty({ message: 'Nome é obrigatorio' }),
@@ -53,7 +51,7 @@ export default function CreateReview() {
     const { name, price, weight, albumLink } = data
 
     try {
-      const responseData = await api.post('review/create-review/', {
+      const responseData = await apiClient.post('review/create-review/', {
         name,
         price,
         weight,
