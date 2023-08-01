@@ -59,22 +59,27 @@ export function Header() {
 
         <div className="flex space-x-4 items-center">
           <Search />
-          { session.status == "authenticated" ? (
+          {session.status == 'authenticated' ? (
             <>
               <Link href={'/'} className="flex items-center gap-2">
                 <Avatar className="w-10 h-10">
                   <AvatarImage src={session.data.user.avatar_url} />
-                  <AvatarFallback>{session.data.user.name.slice(0, 2)}</AvatarFallback>
+                  <AvatarFallback>
+                    {session.data.user.name.slice(0, 2)}
+                  </AvatarFallback>
                 </Avatar>
-              </Link> 
-              <Link href={'/review/create-review'} className="flex items-center gap-2">
+              </Link>
+              <Link
+                href={'/review/create-review'}
+                className="flex items-center gap-2"
+              >
                 <Button className="bg-purple-600 hover:bg-purple-700 text-zinc-50">
                   Criar um review
                 </Button>
               </Link>
             </>
           ) : (
-            <div className='space-x-2'>
+            <div className="space-x-2">
               <ModalLogin />
               <ModalCreateAccount />
             </div>

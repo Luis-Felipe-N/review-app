@@ -2,9 +2,9 @@ import { NextAuthOptions, User } from 'next-auth'
 
 import { compare } from 'bcryptjs'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { prisma } from '../prisma';
-import email from 'next-auth/providers/email';
-import { PrismaAdapter } from '../prisma/adapter';
+import { prisma } from '../prisma'
+import email from 'next-auth/providers/email'
+import { PrismaAdapter } from '../prisma/adapter'
 
 export const authOptions: NextAuthOptions = {
   // adapter: PrismaAdapter(),
@@ -30,7 +30,10 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        const passwordIsCorrect = await compare(credentials.password, user.password)
+        const passwordIsCorrect = await compare(
+          credentials.password,
+          user.password,
+        )
 
         if (passwordIsCorrect) {
           return {
@@ -52,29 +55,29 @@ export const authOptions: NextAuthOptions = {
     async session({ session, user, token }) {
       const userPrisma = await prisma.user.findUnique({
         where: {
-          id: token.sub
-        }
+          id: token.sub,
+        },
       })
 
       if (userPrisma) {
         const userSession: User = {
-          ...session.user, 
-          id: userPrisma.id, 
+          ...session.user,
+          id: userPrisma.id,
           name: userPrisma.name,
           username: userPrisma.username,
           avatar_url: userPrisma?.avatar_url || '',
-          email: userPrisma?.email || ''
+          email: userPrisma?.email || '',
         }
         session.user = userSession
         return session
       }
 
       const userSession: User = {
-        ...session.user, 
-        id: token.sub!
+        ...session.user,
+        id: token.sub!,
       }
       session.user = userSession
       return session
     },
-  }
+  },
 }

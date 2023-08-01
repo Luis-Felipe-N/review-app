@@ -15,7 +15,7 @@ import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { ErrorMessage } from '../Form/ErrorMessage'
+import { ErrorMessage } from '../form/ErrorMessage'
 
 const loginFormSchema = z.object({
   username: z.string().nonempty('Este campo é obrigatório'),
@@ -28,7 +28,7 @@ const loginFormSchema = z.object({
 type LoginFormData = z.infer<typeof loginFormSchema>
 
 export function ModalLogin() {
-  const [ open, setOpen ] = useState(false)
+  const [open, setOpen] = useState(false)
   const {
     register,
     handleSubmit,

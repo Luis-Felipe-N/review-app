@@ -1,8 +1,11 @@
-import { imgur } from ".";
+import { imgur } from '.'
 
-export async function getAlbum(albumLink: string){
+export async function getAlbum(albumLink: string) {
   const albumHash = albumLink.split('/')[albumLink.split('/').length - 1]
 
-  const { data: album } = await imgur.getAlbum(albumHash)
-  return album
-} 
+  const album = await imgur.getAlbum(albumHash)
+  if (album.success == false) {
+    return new Error('Ocorreu um erro ao encontrar as imagens.')
+  }
+  return album.data
+}

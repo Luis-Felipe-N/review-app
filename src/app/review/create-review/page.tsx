@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
-import { ErrorMessage } from '@/app/components/Form/ErrorMessage'
+import { ErrorMessage } from '@/app/components/form/ErrorMessage'
 import { MultiStep } from '@/app/components/MultiStep'
 import { ArrowRight } from '@phosphor-icons/react'
 import { redirect, useRouter } from 'next/navigation'
@@ -25,7 +25,7 @@ const preProductFormShema = z.object({
   name: z.string().nonempty({ message: 'Nome é obrigatorio' }),
   price: z.number(),
   weight: z.number(),
-  albumLink: z.string()
+  albumLink: z.string(),
 })
 
 type PreProductFormData = z.infer<typeof preProductFormShema>
@@ -33,7 +33,7 @@ type PreProductFormData = z.infer<typeof preProductFormShema>
 export default function CreateReview() {
   const session = useSession()
 
-  if (session.status == "unauthenticated") return redirect('/')
+  if (session.status == 'unauthenticated') return redirect('/')
 
   const form = useForm<PreProductFormData>({
     resolver: zodResolver(preProductFormShema),
@@ -56,7 +56,7 @@ export default function CreateReview() {
         price,
         weight,
         albumLink,
-        userId: session.data?.user.id
+        userId: session.data?.user.id,
       })
 
       console.log(responseData)
@@ -65,7 +65,7 @@ export default function CreateReview() {
     } catch (error) {
       console.log(error)
       setError('root', {
-        message: "Ocorreu algum erro em criar sua review",
+        message: 'Ocorreu algum erro em criar sua review',
       })
     }
   }

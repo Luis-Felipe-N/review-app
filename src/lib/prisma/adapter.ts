@@ -6,9 +6,8 @@ import { prisma } from '../prisma'
 export function PrismaAdapter(): Adapter {
   return {
     async createUser(user) {
-
       const prismaUser = await prisma.user.create({
-        data: user
+        data: user,
       })
 
       return {
@@ -18,7 +17,7 @@ export function PrismaAdapter(): Adapter {
         email: prismaUser.email!,
         emailVerified: null,
         avatar_url: prismaUser.avatar_url!,
-        password: prismaUser.password
+        password: prismaUser.password,
       }
     },
 
@@ -40,7 +39,7 @@ export function PrismaAdapter(): Adapter {
         email: user.email!,
         emailVerified: null,
         avatar_url: user.avatar_url!,
-        password: user.password
+        password: user.password,
       }
     },
     async getUserByEmail(email) {
@@ -61,7 +60,7 @@ export function PrismaAdapter(): Adapter {
         email: user.email!,
         emailVerified: null,
         avatar_url: user.avatar_url!,
-        password: user.password
+        password: user.password,
       }
     },
     async getUserByAccount({ providerAccountId, provider }) {
@@ -90,7 +89,7 @@ export function PrismaAdapter(): Adapter {
         email: user.email!,
         emailVerified: null,
         avatar_url: user.avatar_url!,
-        password: user.password
+        password: user.password,
       }
     },
 
@@ -113,7 +112,7 @@ export function PrismaAdapter(): Adapter {
         email: prismaUser.email!,
         emailVerified: null,
         avatar_url: prismaUser.avatar_url!,
-        password: prismaUser.password
+        password: prismaUser.password,
       }
     },
 
@@ -180,7 +179,7 @@ export function PrismaAdapter(): Adapter {
           email: user.email!,
           emailVerified: null,
           avatar_url: user.avatar_url!,
-          password: user.password
+          password: user.password,
         },
       }
     },

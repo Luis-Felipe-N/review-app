@@ -7,8 +7,8 @@ interface User {
 }
 
 export interface Rating {
-  type: "bad" | "good"
-  id: "bad" | "good"
+  type: 'bad' | 'good'
+  id: 'bad' | 'good'
 
   user: User
 }

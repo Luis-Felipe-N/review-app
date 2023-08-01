@@ -8,7 +8,10 @@ const completeProductFormShema = z.object({
   description: z.string(),
 })
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+) {
   const body = await request.json()
   const review = completeProductFormShema.parse(body)
 
@@ -19,7 +22,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     data: {
       bacth: review.batch,
       link: review.link,
-      description: review.description
+      description: review.description,
     },
   })
 
