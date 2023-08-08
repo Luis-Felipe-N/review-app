@@ -28,7 +28,17 @@ export async function GET(request: NextRequest) {
           avatar_url: true,
         },
       },
-      comments: true,
+      comments: {
+        select: {
+          user: {
+            select: {
+              name: true,
+              username: true,
+              avatar_url: true,
+            },
+          },
+        }
+      },
       ratings: true,
     },
   })

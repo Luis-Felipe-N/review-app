@@ -94,8 +94,6 @@ model Review {
 model Comment {
   id         String   @id @default(uuid())
   content    String
-  redLike    Int      @default(0)
-  greenLike  Int      @default(0)
   created_at DateTime @default(now())
 
   user    User   @relation(fields: [user_id], references: [id])
@@ -104,8 +102,14 @@ model Comment {
   review    Review @relation(fields: [review_id], references: [id])
   review_id String
 
+  reply    Comment? @relation("commentReplys", fields: [reply_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  reply_id String?
+
+  replys Comment[] @relation("commentReplys")
+
   @@index([user_id])
   @@index([review_id])
+  @@index([reply_id])
   @@map("comments")
 }
 

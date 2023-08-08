@@ -12,30 +12,40 @@ const preProductFormShema = z.object({
 })
 
 export async function POST(request: NextRequest, res: NextResponse) {
-  const body = await request.json()
-  const { name, price, weight, userId, albumLink } =
-    preProductFormShema.parse(body)
-
-  const album = await getAlbum(albumLink)
-  console.log
-  const thumbnail = album.images[0].link
-  const review = await prisma.review.create({
-    data: {
-      title: name,
-      price,
-      weight,
-      user_id: userId,
-      album_link: albumLink,
-      thumbnail,
-    },
-  })
-
-  return NextResponse.json(
-    {
-      review,
-    },
-    {
-      status: 201,
-    },
-  )
+  try {
+    const body = await request.json()
+    const { name, price, weight, userId, albumLink } =
+      preProductFormShema.parse(body)
+  
+    const album = await getAlbum(albumLink)
+    const thumbnail = album instanceof Error ? '' : album.images[0].link
+    const review = await prisma.review.create({
+      data: {
+        title: name,
+        price,
+        weight,
+        user_id: userId,
+        album_link: albumLink,
+        thumbnail,
+      },
+    })
+  
+    return NextResponse.json(
+      {
+        review,
+      },
+      {
+        status: 201,
+      },
+    )
+  } catch (error) {
+    const error_response = {
+      status: 'error',
+      message: 'Não foi possível criar uma review',
+    }
+    return new NextResponse(JSON.stringify(error_response), {
+      status: 404,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
 }

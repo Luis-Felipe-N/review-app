@@ -13,6 +13,17 @@ export interface Rating {
   user: User
 }
 
+export interface Comment {
+  id: string
+  content: string
+  created_at: Date
+
+  user: User
+  review: Review
+
+  replys: Comment[]
+}
+
 export interface Review {
   id: string
   title: string
@@ -27,7 +38,7 @@ export interface Review {
 
   user: User
 
-  comments: []
+  comments: Comment[]
   ratings: Rating[]
   // user_id String
 }

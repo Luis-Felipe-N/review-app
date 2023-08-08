@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const createAccountFormSchema = z.object({
+  avatar_url: z.string(),
   name: z.string(),
   username: z.string(),
   password: z
@@ -51,6 +52,11 @@ export function ModalCreateAccount() {
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
+            <Label className="space-y-2">
+              <span>Avatar URL</span>
+              <Input {...register('avatar_url')} />
+            </Label>
+            
             <div className="">
               <Label className="space-y-2">
                 <span>Nome</span>

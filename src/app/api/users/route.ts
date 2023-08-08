@@ -4,12 +4,13 @@ import { NextRequest, NextResponse } from 'next/server'
 
 interface CreateUserProps {
   name: string
+  avatar_url: string
   username: string
   password: string
 }
 
 export async function POST(request: NextRequest, res: NextResponse) {
-  const { name, password, username }: CreateUserProps = await request.json()
+  const { name, avatar_url, password, username }: CreateUserProps = await request.json()
 
   const userExists = await prisma.user.findUnique({
     where: {
@@ -33,6 +34,7 @@ export async function POST(request: NextRequest, res: NextResponse) {
   const user = await prisma.user.create({
     data: {
       name,
+      avatar_url,
       username,
       password: passwordEncrypted,
     },

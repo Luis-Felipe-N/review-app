@@ -52,7 +52,7 @@ export async function POST(
   } catch (error) {
     const error_response = {
       status: 'error',
-      message: 'Nao foi possível criar uma avaliação',
+      message: 'Não foi possível criar uma avaliação',
     }
     return new NextResponse(JSON.stringify(error_response), {
       status: 404,

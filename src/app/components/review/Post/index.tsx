@@ -13,6 +13,7 @@ interface PostProps {
 }
 
 export function Post({ review }: PostProps) {
+
   return (
     <Link href={`/review/${review.id}/`}>
       <Card className="w-96 rounded-2xl border-zinc-900 hover:border-purple-600 border-2">
@@ -41,9 +42,9 @@ export function Post({ review }: PostProps) {
               />
               <ul className="flex">
                 {review.comments.length > 0 ? (
-                  review.comments.map((like, index) => (
+                  review.comments.map((comment, index) => (
                     <li
-                      key={like}
+                      key={comment.id}
                       style={{
                         transform: `translateX(-${index * 15}px)`,
                       }}
@@ -51,7 +52,7 @@ export function Post({ review }: PostProps) {
                       <Avatar className="w-8 h-8 border-zinc-950 border-4">
                         <AvatarImage
                           className="object-cover"
-                          src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                          src={comment.user.avatar_url}
                         />
                         <AvatarFallback>LF</AvatarFallback>
                       </Avatar>
