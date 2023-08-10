@@ -18,7 +18,13 @@ export async function POST(request: NextRequest, res: NextResponse) {
       preProductFormShema.parse(body)
   
     const album = await getAlbum(albumLink)
-    const thumbnail = album instanceof Error ? '' : album.images[0].link
+
+    if ((album instanceof Error) || album.images.length <= 0 ) {
+      throw new Error('Parece que o link do álbum está quebrado. Por favor, tente inserir outro.')
+    }
+
+    const thumbnail = album.images[0].link      
+
     const review = await prisma.review.create({
       data: {
         title: name,
@@ -39,9 +45,11 @@ export async function POST(request: NextRequest, res: NextResponse) {
       },
     )
   } catch (error) {
+    console.log(error)
+
     const error_response = {
       status: 'error',
-      message: 'Não foi possível criar uma review',
+      message: error instanceof Error ? error.message : 'Não foi possível criar uma review',
     }
     return new NextResponse(JSON.stringify(error_response), {
       status: 404,

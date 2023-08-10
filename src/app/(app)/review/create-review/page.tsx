@@ -20,6 +20,8 @@ import { ArrowRight } from '@phosphor-icons/react'
 import { redirect, useRouter } from 'next/navigation'
 import { api, apiClient } from '@/lib/api'
 import { useSession } from 'next-auth/react'
+import { AxiosError } from 'axios'
+import { useToast } from '@/app/components/ui/use-toast'
 
 const preProductFormShema = z.object({
   name: z.string().nonempty({ message: 'Nome é obrigatorio' }),
@@ -32,7 +34,7 @@ type PreProductFormData = z.infer<typeof preProductFormShema>
 
 export default function CreateReview() {
   const session = useSession()
-
+  const { toast } = useToast()
   if (session.status == 'unauthenticated') return redirect('/')
 
   const form = useForm<PreProductFormData>({
@@ -59,13 +61,17 @@ export default function CreateReview() {
         userId: session.data?.user.id,
       })
 
-      console.log(responseData)
-
+      toast({
+        title: "Criando review",
+        description: "Review criada com sucesso."
+      })
       router.push(`/review/${responseData.data.review.id}/complete`)
     } catch (error) {
-      console.log(error)
+      
+      const message = error instanceof AxiosError ? error.response?.data.message : 'Ocorreu algum erro em criar sua review'
+
       setError('root', {
-        message: 'Ocorreu algum erro em criar sua review',
+        message
       })
     }
   }
