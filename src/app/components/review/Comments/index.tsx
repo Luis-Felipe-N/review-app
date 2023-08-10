@@ -2,11 +2,10 @@
 
 import { Comment, Review } from '@/@types'
 import { apiClient } from '@/lib/api'
-import { formatDistanceDate } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { useQuery } from '@tanstack/react-query'
-import { Loader2, LoaderIcon } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -108,7 +107,7 @@ export function Comments({ review }: CommentsProps) {
               {comments.map(comment => <CommentItem key={comment.id} comment={comment} />) }
             </ScrollArea>
           ) : (
-            <span>sem comentários</span>
+            <p className='text-center'>Sem comentários</p>
           )}
         </ul>
       </CardContent>

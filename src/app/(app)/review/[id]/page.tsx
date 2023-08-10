@@ -42,10 +42,11 @@ export default async function Review({ params }: ReviewProps) {
             <h1 className="text-xl">{review.title}</h1>
             <Rating review={review} />
           </div>
-          <div>
+          <div className='mt-1'>
             <strong>Comentário sobre o produto</strong>
             <p className="text-zinc-200">{review.description}</p>
           </div>
+          <span className='block mt-1'><strong>Link:</strong> <a className='underline text-blue-500' href={review.link}>{review.link}</a></span>
         </div>
       </div>
 

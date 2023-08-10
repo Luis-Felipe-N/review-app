@@ -40,7 +40,7 @@ export function GridImages({ review }: GridImagesProps) {
   }
 
   return (
-    <div className="flex gap-2 h-[700px]">
+    <div className="grid grid-cols-[112px_minmax(700px,_1fr)] gap-2 h-[700px]">
       {album instanceof Error ? (
         <div className="flex flex-col justify-center items-center w-full">
           <Image
@@ -79,7 +79,7 @@ export function GridImages({ review }: GridImagesProps) {
                       alt=""
                       width={100}
                       height={100}
-                      className="h-24 w-24"
+                      className="h-28 w-28"
                     />
                   </li>
                 ))}
