@@ -6,6 +6,8 @@ import { GridImages } from '@/app/components/review/GridImages'
 import { Rating } from '@/app/components/review/Rating'
 import { api } from '@/lib/api'
 import { AxiosError } from 'axios'
+import { url } from 'inspector'
+import { NextSeo } from 'next-seo'
 
 interface ReviewProps {
   params: {
@@ -34,6 +36,33 @@ export default async function Review({ params }: ReviewProps) {
   }
 
   return (
+    <>
+    <NextSeo
+      title={`${review.title} | Deep Review`}
+      description={review.description}
+      openGraph={{
+        url: 'https://www.url.ie/a',
+        title: `${review.title} | Deep Review`,
+        description: review.description,
+        images: [
+          {
+            url: review.thumbnail!,
+            width: 800,
+            height: 600,
+            alt: review.title,
+          },
+          {
+            url: review.thumbnail!,
+            width: 800,
+            height: 600,
+            alt: review.title,
+          },
+          { url: review.thumbnail! },
+          { url: review.thumbnail! },
+        ],
+        siteName: 'DeepReview',
+      }}
+    />
     <div className="flex container mx-auto min-h-full  justify-center py-12 gap-4">
       <div className="w-full">
         <GridImages review={review} />
@@ -52,5 +81,6 @@ export default async function Review({ params }: ReviewProps) {
 
       <Comments review={review} />
     </div>
+    </>
   )
 }

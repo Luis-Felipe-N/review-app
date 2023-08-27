@@ -16,6 +16,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ErrorMessage } from '../form/ErrorMessage'
+import error from 'next/error'
+import { useToast } from '../ui/use-toast'
 
 const loginFormSchema = z.object({
   username: z.string().nonempty('Este campo é obrigatório'),
@@ -38,19 +40,37 @@ export function ModalLogin() {
     resolver: zodResolver(loginFormSchema),
   })
 
-  async function handleLogin(data: LoginFormData) {
-    const resposeData = await signIn('credentials', {
-      username: data.username,
-      password: data.password,
-      redirect: false,
-    })
+  const {toast} = useToast()
 
-    if (resposeData?.error == 'CredentialsSignin') {
-      setError('root', {
-        message: 'Usuario ou senha incorreto',
+  async function handleLogin(data: LoginFormData) {
+    try {
+      const resposeData = await signIn('credentials', {
+        username: data.username,
+        password: data.password,
+        redirect: false,
       })
-    } else {
-      setOpen(false)
+
+      if (!resposeData) return
+      
+      if (resposeData.error == 'CredentialsSignin') {
+        setError('root', {
+          message: 'Usuario ou senha incorreto',
+        })
+      } else if (!!resposeData.error) {
+        setError('root', {
+          message: 'Erro em fazer login',
+        })
+      } else {
+        setOpen(false)
+        toast({
+          title: "Login",
+          description: "Login foi realizando com sucesso"
+        })
+      }
+    } catch (error) {
+      setError('root', {
+        message: 'Erro em fazer login',
+      })
     }
   }
 

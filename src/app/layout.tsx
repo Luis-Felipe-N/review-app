@@ -6,6 +6,7 @@ import NextAuthSessionProvider from './provider/sessionProvider'
 
 import './global.css'
 import { Toaster } from './components/ui/toaster'
+import { DefaultSeo } from 'next-seo'
 
 export const metadata: Metadata = {
   title: 'Página inicial / DeepReview',
@@ -20,6 +21,14 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
+        <DefaultSeo
+          openGraph={{
+            type: 'website',
+            locale: 'pt_BR',
+            url: 'https://www.deepreview.luisfelipenunes.com/',
+            siteName: 'Deep Review',
+          }}
+        />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <NextAuthSessionProvider>
             <QueryProvider>
