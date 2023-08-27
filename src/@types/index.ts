@@ -41,14 +41,3 @@ export interface Review {
   comments: Comment[]
   ratings: Rating[]
 }
-
-export interface Comment {
-  id: string
-  content: string
-  created_at: Date
-
-  user: User
-  review: Review
-
-  replys: Comment[]
-}
