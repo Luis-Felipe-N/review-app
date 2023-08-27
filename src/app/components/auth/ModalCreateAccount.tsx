@@ -32,8 +32,13 @@ const createAccountFormSchema = z.object({
 type CreateAccountFormData = z.infer<typeof createAccountFormSchema>
 
 export function ModalCreateAccount() {
-  const {toast} = useToast()
-  const { handleSubmit, register, setError, formState: { errors, isSubmitting } } = useForm<CreateAccountFormData>({
+  const { toast } = useToast()
+  const {
+    handleSubmit,
+    register,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<CreateAccountFormData>({
     resolver: zodResolver(createAccountFormSchema),
   })
 
@@ -42,23 +47,23 @@ export function ModalCreateAccount() {
       const responseData = await api.post('/users', credentials)
 
       toast({
-        title: "Cadastro",
-        description: "O Cadastro foi realizando com sucesso"
+        title: 'Cadastro',
+        description: 'O Cadastro foi realizando com sucesso',
       })
     } catch (error) {
-      if ((error instanceof AxiosError) && error.response) {
+      if (error instanceof AxiosError && error.response) {
         switch (error.response.data.message) {
-          case "Username already taken.":
+          case 'Username already taken.':
             setError('root', {
               message: 'Usuário indisponivel',
             })
-            break;
+            break
 
           default:
             setError('root', {
               message: 'Erro ao realizar o cadastro',
             })
-            break;
+            break
         }
       }
     }
@@ -86,7 +91,7 @@ export function ModalCreateAccount() {
               <span>Avatar URL</span>
               <Input {...register('avatar_url')} />
             </Label>
-            
+
             <div className="">
               <Label className="space-y-2">
                 <span>Nome</span>
@@ -107,25 +112,22 @@ export function ModalCreateAccount() {
             </div>
           </div>
           <DialogFooter>
-            {
-              !isSubmitting ? (
-                <Button
-                  type="submit"
-                  className="bg-purple-600 hover:bg-purple-700 text-gray-50"
-                >
-                  Criar
-                </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  className="bg-purple-600 hover:bg-purple-700 text-gray-50"
-                >
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Carregando
-                </Button>
-              )
-            }
-
+            {!isSubmitting ? (
+              <Button
+                type="submit"
+                className="bg-purple-600 hover:bg-purple-700 text-gray-50"
+              >
+                Criar
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                className="bg-purple-600 hover:bg-purple-700 text-gray-50"
+              >
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Carregando
+              </Button>
+            )}
           </DialogFooter>
         </form>
       </DialogContent>

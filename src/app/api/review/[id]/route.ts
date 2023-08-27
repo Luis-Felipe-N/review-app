@@ -24,21 +24,21 @@ export async function GET(
   })
 
   if (!review) {
-    const error_response = {
+    const errorResponse = {
       status: 'error',
       message: 'Nenhuma review com este ID foi encontrado',
     }
-    return new NextResponse(JSON.stringify(error_response), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: 404,
       headers: { 'Content-Type': 'application/json' },
     })
   }
 
-  const json_response = {
+  const jsonResponse = {
     status: 'success',
     data: {
       review,
     },
   }
-  return NextResponse.json(json_response)
+  return NextResponse.json(jsonResponse)
 }

@@ -37,50 +37,55 @@ export default async function Review({ params }: ReviewProps) {
 
   return (
     <>
-    <NextSeo
-      title={`${review.title} | Deep Review`}
-      description={review.description}
-      openGraph={{
-        url: 'https://www.url.ie/a',
-        title: `${review.title} | Deep Review`,
-        description: review.description,
-        images: [
-          {
-            url: review.thumbnail!,
-            width: 800,
-            height: 600,
-            alt: review.title,
-          },
-          {
-            url: review.thumbnail!,
-            width: 800,
-            height: 600,
-            alt: review.title,
-          },
-          { url: review.thumbnail! },
-          { url: review.thumbnail! },
-        ],
-        siteName: 'DeepReview',
-      }}
-    />
-    <div className="flex container mx-auto min-h-full  justify-center py-12 gap-4">
-      <div className="w-full">
-        <GridImages review={review} />
-        <div className="p-4 mt-4 bg-zinc-900 rounded-xl">
-          <div className="flex items-center justify-between">
-            <h1 className="text-xl">{review.title}</h1>
-            <Rating review={review} />
+      <NextSeo
+        title={`${review.title} | Deep Review`}
+        description={review.description}
+        openGraph={{
+          url: 'https://www.url.ie/a',
+          title: `${review.title} | Deep Review`,
+          description: review.description,
+          images: [
+            {
+              url: review.thumbnail!,
+              width: 800,
+              height: 600,
+              alt: review.title,
+            },
+            {
+              url: review.thumbnail!,
+              width: 800,
+              height: 600,
+              alt: review.title,
+            },
+            { url: review.thumbnail! },
+            { url: review.thumbnail! },
+          ],
+          siteName: 'DeepReview',
+        }}
+      />
+      <div className="flex container mx-auto min-h-full  justify-center py-12 gap-4">
+        <div className="w-full">
+          <GridImages review={review} />
+          <div className="p-4 mt-4 bg-zinc-900 rounded-xl">
+            <div className="flex items-center justify-between">
+              <h1 className="text-xl">{review.title}</h1>
+              <Rating review={review} />
+            </div>
+            <div className="mt-1">
+              <strong>Comentário sobre o produto</strong>
+              <p className="text-zinc-200">{review.description}</p>
+            </div>
+            <span className="block mt-1">
+              <strong>Link:</strong>{' '}
+              <a className="underline text-blue-500" href={review.link}>
+                {review.link}
+              </a>
+            </span>
           </div>
-          <div className='mt-1'>
-            <strong>Comentário sobre o produto</strong>
-            <p className="text-zinc-200">{review.description}</p>
-          </div>
-          <span className='block mt-1'><strong>Link:</strong> <a className='underline text-blue-500' href={review.link}>{review.link}</a></span>
         </div>
-      </div>
 
-      <Comments review={review} />
-    </div>
+        <Comments review={review} />
+      </div>
     </>
   )
 }

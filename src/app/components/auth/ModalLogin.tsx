@@ -40,7 +40,7 @@ export function ModalLogin() {
     resolver: zodResolver(loginFormSchema),
   })
 
-  const {toast} = useToast()
+  const { toast } = useToast()
 
   async function handleLogin(data: LoginFormData) {
     try {
@@ -51,20 +51,20 @@ export function ModalLogin() {
       })
 
       if (!resposeData) return
-      
+
       if (resposeData.error == 'CredentialsSignin') {
         setError('root', {
           message: 'Usuario ou senha incorreto',
         })
-      } else if (!!resposeData.error) {
+      } else if (resposeData.error) {
         setError('root', {
           message: 'Erro em fazer login',
         })
       } else {
         setOpen(false)
         toast({
-          title: "Login",
-          description: "Login foi realizando com sucesso"
+          title: 'Login',
+          description: 'Login foi realizando com sucesso',
         })
       }
     } catch (error) {

@@ -62,16 +62,18 @@ export default function CreateReview() {
       })
 
       toast({
-        title: "Criando review",
-        description: "Review criada com sucesso."
+        title: 'Criando review',
+        description: 'Review criada com sucesso.',
       })
       router.push(`/review/${responseData.data.review.id}/complete`)
     } catch (error) {
-      
-      const message = error instanceof AxiosError ? error.response?.data.message : 'Ocorreu algum erro em criar sua review'
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : 'Ocorreu algum erro em criar sua review'
 
       setError('root', {
-        message
+        message,
       })
     }
   }
