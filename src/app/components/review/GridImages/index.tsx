@@ -14,8 +14,6 @@ interface GridImagesProps {
   review: Review
 }
 
-interface ImageProps {}
-
 export function GridImages({ review }: GridImagesProps) {
   const [album, setAlbum] = useState<AlbumData | Error>()
   const [currentImage, setCurrentImage] = useState<ImageData>()
