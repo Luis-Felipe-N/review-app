@@ -1,7 +1,11 @@
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
-export async function GET({ params }: { params: { id: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } },
+) {
+  console.log(params)
   const id = params.id
   const review = await prisma.review.findUnique({
     where: {

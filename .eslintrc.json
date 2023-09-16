@@ -1,5 +1,5 @@
 {
-  "extends": ["@rocketseat/eslint-config/react", "next/core-web-vitals"],
+  "extends": ["next/core-web-vitals"],
   "rules": {
     // Note: you must disable the base rule as it can report incorrect errors
     "no-use-before-define": "off"

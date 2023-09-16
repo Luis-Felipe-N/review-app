@@ -81,7 +81,7 @@ export function ModalCreateAccount() {
           <DialogHeader>
             <DialogTitle>Criar conta</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+              Make changes to your profile here. Click save when you`re done.
             </DialogDescription>
 
             {errors.root && <ErrorMessage message={errors.root.message} />}

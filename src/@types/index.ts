@@ -20,8 +20,6 @@ export interface Comment {
 
   user: User
   review: Review
-
-  // replys: Comment[]
 }
 
 export interface Review {

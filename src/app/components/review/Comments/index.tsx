@@ -66,6 +66,12 @@ export function Comments({ review }: CommentsProps) {
           description: 'Não foi possível adicionar um comentário',
         })
       }
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Erro ao adicionar comentário',
+        description: 'Faça login para conseguir adicionar um comentário.',
+      })
     }
   }
 
@@ -103,7 +109,7 @@ export function Comments({ review }: CommentsProps) {
 
           {isLoadingComments ? (
             review.comments.map((comment) => (
-              <div className="flex gap-2 items-start">
+              <div key={comment.id} className="flex gap-2 items-start">
                 <Skeleton className="h-12 w-12 rounded" />
                 <div className="flex-1">
                   <Skeleton className="h-32 w-full rounded" />

@@ -25,7 +25,7 @@ export function GridImages({ review }: GridImagesProps) {
     }
 
     getAlbumFromImgur()
-  }, [])
+  }, [review.album_link])
 
   useEffect(() => {
     if (album && !(album instanceof Error)) {
