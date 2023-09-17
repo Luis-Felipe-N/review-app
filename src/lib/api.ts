@@ -5,5 +5,5 @@ export const api = axios.create({
 })
 
 export const apiClient = axios.create({
-  baseURL: process.env.DOMAINCLIENT_URL + '/api/',
+  baseURL: process.env.NEXT_PUBLIC_DOMAINCLIENT_URL + '/api/',
 })
