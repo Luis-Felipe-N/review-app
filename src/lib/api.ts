@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL: process.env.DOMAIN_URL + 'api/',
+  baseURL: process.env.NEXT_PUBLIC_DOMAIN_URL + 'api/',
 })
 
 export const apiClient = axios.create({
