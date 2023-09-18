@@ -20,31 +20,31 @@ Este repositório contém a implementação do DeepReview uma aplicação constr
 ## Endpoints :earth_americas:
 A API oferece os seguintes endpoints:
 
-**POST** /users/ :👥:
+**POST** api/users/ :👥:
 Registra um novo usuário na base de dados.
 
-**POST** /review/create-review :🆕:
+**POST** api/review/create-review :🆕:
 Registra uma nova review na base de dados.
 
-**GET** /review/ :📋👁️‍🗨️:
+**GET** api/review/ :📋👁️‍🗨️:
 Retorna uma lista de reviews.
 
-**GET** /review/**:reviewId**/ :👁️‍🗨️:
+**GET** api/review/**:reviewId**/ :👁️‍🗨️:
 Busca por uma review.
 
-**PUT** /review/**:reviewId**/complete  :✅:
+**PUT** api/review/**:reviewId**/complete  :✅:
 Atualiza uma review com novos campos.
 
-**POST** /review/**:reviewId**/rating :📉:
+**POST** api/review/**:reviewId**/rating :📉:
 Registra uma nova avaliação na base de dados.
 
-**GET** /review/**:reviewId**/rating :📉:
+**GET** api/review/**:reviewId**/rating :📉:
 Retorna uma lista de avaliações da review.
 
-**POST** /review/**:reviewId**/comment :📨:
+**POST** api/review/**:reviewId**/comment :📨:
 Registra um novo comentário na base de dados.
 
-**GET** /review/**:reviewId**/comment :📨:
+**GET** api/review/**:reviewId**/comment :📨:
 Retorna uma lista de comentários da review.
 
 ## Autenticação :closed_lock_with_key:
