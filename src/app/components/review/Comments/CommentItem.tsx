@@ -16,14 +16,14 @@ export function CommentItem({ comment }: CommentItemProps) {
   function handleDeleteComment(commentId: string) {
     try {
       toast({
-        title: "Remover comentário",
+        title: 'Remover comentário',
         description: 'Comentário removido com sucesso',
       })
     } catch (error) {
       toast({
-        title: "Erro ao adicionar comentário",
+        title: 'Erro ao adicionar comentário',
         description: 'Não foi possível adicionar um comentário',
-        variant: 'destructive'
+        variant: 'destructive',
       })
     }
   }
@@ -45,7 +45,12 @@ export function CommentItem({ comment }: CommentItemProps) {
             </small>
           </div>
 
-          <Button variant="ghost" title='Remover comentário' onClick={() => handleDeleteComment(comment.id)} className='p-1 hover:text-red-400'>
+          <Button
+            variant="ghost"
+            title="Remover comentário"
+            onClick={() => handleDeleteComment(comment.id)}
+            className="p-1 hover:text-red-400"
+          >
             <Trash />
           </Button>
         </CardHeader>

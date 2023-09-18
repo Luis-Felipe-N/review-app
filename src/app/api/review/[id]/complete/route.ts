@@ -15,7 +15,7 @@ export async function PUT(
   try {
     const body = await request.json()
     const review = completeProductFormShema.parse(body)
-  
+
     const reviewPrisma = await prisma.review.update({
       where: {
         id: params.id,
@@ -26,7 +26,7 @@ export async function PUT(
         description: review.description,
       },
     })
-  
+
     return NextResponse.json(
       {
         review: reviewPrisma,
@@ -36,11 +36,11 @@ export async function PUT(
       },
     )
   } catch (error) {
-    const error_response = {
+    const errorResponse = {
       status: 'error',
       message: 'Não foi possível completar a review',
     }
-    return new NextResponse(JSON.stringify(error_response), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: 404,
       headers: { 'Content-Type': 'application/json' },
     })

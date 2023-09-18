@@ -13,7 +13,6 @@ interface PostProps {
 }
 
 export function Post({ review }: PostProps) {
-
   return (
     <Link href={`/review/${review.id}/`}>
       <Card className="w-96 rounded-2xl border-zinc-900 hover:border-purple-600 border-2">

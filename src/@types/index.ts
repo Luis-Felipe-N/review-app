@@ -20,8 +20,6 @@ export interface Comment {
 
   user: User
   review: Review
-
-  replys: Comment[]
 }
 
 export interface Review {
@@ -40,5 +38,4 @@ export interface Review {
 
   comments: Comment[]
   ratings: Rating[]
-  // user_id String
 }

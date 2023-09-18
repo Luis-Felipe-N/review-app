@@ -1,10 +1,9 @@
-// 'use client'
-
 import { Review } from '@/@types'
 import { Comments } from '@/app/components/review/Comments'
 import { GridImages } from '@/app/components/review/GridImages'
 import { Rating } from '@/app/components/review/Rating'
 import { api } from '@/lib/api'
+
 import { AxiosError } from 'axios'
 
 interface ReviewProps {
@@ -12,6 +11,7 @@ interface ReviewProps {
     id: string
   }
 }
+
 
 async function getReview(reviewId: string): Promise<Review | Error> {
   try {
@@ -26,11 +26,14 @@ async function getReview(reviewId: string): Promise<Review | Error> {
   }
 }
 
-export default async function Review({ params }: ReviewProps) {
+export default async function Review({ params }: { params: { id: string } }) {
+  console.log('[REVIEWID]', params.id)
+
   const review = await getReview(params.id)
+  console.log('[REVIEW]', review)
 
   if (review instanceof Error) {
-    return <div>{review.message}</div>
+    return <div>DEU MERDA{review.message}</div>
   }
 
   return (
@@ -42,11 +45,16 @@ export default async function Review({ params }: ReviewProps) {
             <h1 className="text-xl">{review.title}</h1>
             <Rating review={review} />
           </div>
-          <div className='mt-1'>
+          <div className="mt-1">
             <strong>Comentário sobre o produto</strong>
             <p className="text-zinc-200">{review.description}</p>
           </div>
-          <span className='block mt-1'><strong>Link:</strong> <a className='underline text-blue-500' href={review.link}>{review.link}</a></span>
+          <span className="block mt-1">
+            <strong>Link:</strong>{' '}
+            <a className="underline text-blue-500" href={review.link}>
+              {review.link}
+            </a>
+          </span>
         </div>
       </div>
 

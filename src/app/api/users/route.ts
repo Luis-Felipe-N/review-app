@@ -10,7 +10,8 @@ interface CreateUserProps {
 }
 
 export async function POST(request: NextRequest, res: NextResponse) {
-  const { name, avatar_url, password, username }: CreateUserProps = await request.json()
+  const { name, avatar_url, password, username }: CreateUserProps =
+    await request.json()
 
   const userExists = await prisma.user.findUnique({
     where: {

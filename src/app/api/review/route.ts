@@ -2,11 +2,11 @@ import { prisma } from '@/lib/prisma'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
-  const page_str = request.nextUrl.searchParams.get('page')
-  const limit_str = request.nextUrl.searchParams.get('limit')
+  const pageStr = request.nextUrl.searchParams.get('page')
+  const limitStr = request.nextUrl.searchParams.get('limit')
 
-  const page = page_str ? parseInt(page_str, 10) : 1
-  const limit = limit_str ? parseInt(limit_str, 10) : 10
+  const page = pageStr ? parseInt(pageStr, 10) : 1
+  const limit = limitStr ? parseInt(limitStr, 10) : 10
   const skip = (page - 1) * limit
 
   const reviews = await prisma.review.findMany({
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
               avatar_url: true,
             },
           },
-        }
+        },
       },
       ratings: true,
     },

@@ -30,17 +30,25 @@ export function Comments({ review }: CommentsProps) {
   const session = useSession()
   const { toast } = useToast()
 
-  const { handleSubmit, register, setValue, watch, formState: { isSubmitting } } = useForm<CommentFormData>({
-    resolver: zodResolver(commentFormShema)
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    watch,
+    formState: { isSubmitting },
+  } = useForm<CommentFormData>({
+    resolver: zodResolver(commentFormShema),
   })
 
-  const { data: comments, isFetching: isFetchingComments, isLoading: isLoadingComments, refetch } = useQuery<Comment[]>(
-    ['comments'],
-    async (): Promise<Comment[]> => {
-      const response = await apiClient.get(`/review/${review.id}/comment`)
-      return response.data.comments
-    },
-  )
+  const {
+    data: comments,
+    isFetching: isFetchingComments,
+    isLoading: isLoadingComments,
+    refetch,
+  } = useQuery<Comment[]>(['comments'], async (): Promise<Comment[]> => {
+    const response = await apiClient.get(`/review/${review.id}/comment`)
+    return response.data.comments
+  })
 
   async function handleCreateComment(commentData: CommentFormData) {
     if (session.status === 'authenticated') {
@@ -54,10 +62,16 @@ export function Comments({ review }: CommentsProps) {
         setValue('content', '')
       } catch (error) {
         toast({
-          title: "Erro ao adicionar comentário",
+          title: 'Erro ao adicionar comentário',
           description: 'Não foi possível adicionar um comentário',
         })
       }
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Erro ao adicionar comentário',
+        description: 'Faça login para conseguir adicionar um comentário.',
+      })
     }
   }
 
@@ -74,7 +88,7 @@ export function Comments({ review }: CommentsProps) {
               placeholder="Diga o que achou do produto"
               {...register('content')}
             />
-            { isSubmitting ? (
+            {isSubmitting ? (
               <Button type="submit" className="ml-auto">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Publicando
@@ -87,27 +101,29 @@ export function Comments({ review }: CommentsProps) {
           </label>
         </form>
         <ul className="mt-8 animate-accordion-down">
-          { isFetchingComments && (
-            <div className='flex justify-center mb-8'>
+          {isFetchingComments && (
+            <div className="flex justify-center mb-8">
               <Loader2 className="mr-2 h-6 w-6 animate-spin" />
             </div>
           )}
 
-          { isLoadingComments ? (
-            review.comments.map(comment => (
-              <div className='flex gap-2 items-start'>
-                 <Skeleton className="h-12 w-12 rounded" />
-                  <div className='flex-1'>
-                    <Skeleton className="h-32 w-full rounded" />
-                  </div>
+          {isLoadingComments ? (
+            review.comments.map((comment) => (
+              <div key={comment.id} className="flex gap-2 items-start">
+                <Skeleton className="h-12 w-12 rounded" />
+                <div className="flex-1">
+                  <Skeleton className="h-32 w-full rounded" />
+                </div>
               </div>
-            )) 
+            ))
           ) : comments && comments.length > 0 ? (
             <ScrollArea className="h-max space-y-4" scrollHideDelay={0}>
-              {comments.map(comment => <CommentItem key={comment.id} comment={comment} />) }
+              {comments.map((comment) => (
+                <CommentItem key={comment.id} comment={comment} />
+              ))}
             </ScrollArea>
           ) : (
-            <p className='text-center'>Sem comentários</p>
+            <p className="text-center">Sem comentários</p>
           )}
         </ul>
       </CardContent>

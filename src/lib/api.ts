@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3000/api/',
+  baseURL: process.env.NEXT_PUBLIC_DOMAIN_URL + 'api/',
 })
 
 export const apiClient = axios.create({
-  baseURL: '/api/',
+  baseURL: process.env.NEXT_PUBLIC_DOMAINCLIENT_URL + '/api/',
 })

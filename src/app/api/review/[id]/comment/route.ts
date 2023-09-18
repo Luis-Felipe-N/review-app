@@ -23,11 +23,11 @@ export async function POST(
     })
 
     if (!review) {
-      const error_response = {
+      const errorResponse = {
         status: 'error',
         message: 'Nenhuma review com este ID foi encontrado',
       }
-      return new NextResponse(JSON.stringify(error_response), {
+      return new NextResponse(JSON.stringify(errorResponse), {
         status: 404,
         headers: { 'Content-Type': 'application/json' },
       })
@@ -41,19 +41,19 @@ export async function POST(
       },
     })
 
-    const json_response = {
+    const jsonResponse = {
       status: 'success',
       data: {
         rating,
       },
     }
-    return NextResponse.json(json_response)
+    return NextResponse.json(jsonResponse)
   } catch (error) {
-    const error_response = {
+    const errorResponse = {
       status: 'error',
       message: 'Não foi possível adicionar um comentário',
     }
-    return new NextResponse(JSON.stringify(error_response), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: 404,
       headers: { 'Content-Type': 'application/json' },
     })
@@ -64,13 +64,13 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } },
 ) {
-  const page_str = request.nextUrl.searchParams.get("page");
-  const limit_str = request.nextUrl.searchParams.get("limit");
+  const pageStr = request.nextUrl.searchParams.get('page')
+  const limitStr = request.nextUrl.searchParams.get('limit')
   const id = params.id
 
-  const page = page_str ? parseInt(page_str, 10) : 1;
-  const limit = limit_str ? parseInt(limit_str, 10) : 10;
-  const skip = (page - 1) * limit;
+  const page = pageStr ? parseInt(pageStr, 10) : 1
+  const limit = limitStr ? parseInt(limitStr, 10) : 10
+  const skip = (page - 1) * limit
 
   console.log(id, page, limit)
 
@@ -87,20 +87,20 @@ export async function GET(
       },
       replys: true,
       created_at: true,
-      content: true
+      content: true,
     },
     where: {
-      review_id: id
+      review_id: id,
     },
     orderBy: {
-      created_at: "desc"
-    }
-  });
+      created_at: 'desc',
+    },
+  })
 
-  let json_response = {
-    status: "success",
+  const jsonResponse = {
+    status: 'success',
     results: comments.length,
     comments,
-  };
-  return NextResponse.json(json_response);
+  }
+  return NextResponse.json(jsonResponse)
 }
