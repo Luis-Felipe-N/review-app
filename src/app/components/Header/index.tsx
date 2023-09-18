@@ -19,7 +19,6 @@ import { DropdownUser } from './DropdownUser'
 export function Header() {
   const session = useSession()
 
-  console.log(session)
 
   return (
     <header className="bg-zinc-900">

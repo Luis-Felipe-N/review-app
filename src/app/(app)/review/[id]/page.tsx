@@ -34,7 +34,7 @@ export default async function Review({ params }: ReviewProps) {
   }
 
   return (
-    <div className="flex container mx-auto min-h-full  justify-center py-12 gap-4">
+    <div className="flex container mx-auto min-h-full justify-center py-12 gap-4 lg:flex-row flex-col">
       <div className="w-full">
         <GridImages review={review} />
         <div className="p-4 mt-4 bg-zinc-900 rounded-xl">

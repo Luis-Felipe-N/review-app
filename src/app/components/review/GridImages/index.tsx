@@ -40,7 +40,7 @@ export function GridImages({ review }: GridImagesProps) {
   }
 
   return (
-    <div className="grid grid-cols-[112px_minmax(700px,_1fr)] gap-2 h-[700px]">
+    <div className={!(album instanceof Error) ? '' : 'h-[700px]'}>
       {album instanceof Error ? (
         <div className="flex flex-col justify-center items-center w-full">
           <Image
@@ -60,9 +60,9 @@ export function GridImages({ review }: GridImagesProps) {
           </h1>
         </div>
       ) : album ? (
-        <>
+        <div className='flex flex-col-reverse lg:flex-row gap-4'>
           <ScrollArea className="h-full min-w-28" scrollHideDelay={0}>
-            <ul className="flex flex-col gap-1 w-28">
+            <ul className="flex lg:flex-col gap-1 w-full ">
               {album &&
                 album.images.map((image) => (
                   <li
@@ -85,27 +85,27 @@ export function GridImages({ review }: GridImagesProps) {
                 ))}
             </ul>
           </ScrollArea>
-          <div className="">
+          <div className='w-full'>
             {currentImage && (
               <img
-                className="object-cover w-full h-full rounded"
+                className="object-cover block w-full h-full rounded"
                 src={currentImage.link}
                 alt=""
               />
             )}
           </div>
-        </>
+        </div>
       ) : (
         <>
           <ScrollArea className="h-full flex-shrink-1">
             <div className="flex flex-col gap-2">
-              <Skeleton className="h-24 w-24 rounded" />
-              <Skeleton className="h-24 w-24 rounded" />
-              <Skeleton className="h-24 w-24 rounded" />
-              <Skeleton className="h-24 w-24 rounded" />
-              <Skeleton className="h-24 w-24 rounded" />
-              <Skeleton className="h-24 w-24 rounded" />
-              <Skeleton className="h-24 w-24 rounded" />
+              <Skeleton className="h-28 w-28 rounded" />
+              <Skeleton className="h-28 w-28 rounded" />
+              <Skeleton className="h-28 w-28 rounded" />
+              <Skeleton className="h-28 w-28 rounded" />
+              <Skeleton className="h-28 w-28 rounded" />
+              <Skeleton className="h-28 w-28 rounded" />
+              <Skeleton className="h-28 w-28 rounded" />
             </div>
           </ScrollArea>
           <div className="flex-1 w-full h-full">

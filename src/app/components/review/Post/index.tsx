@@ -33,35 +33,16 @@ export function Post({ review }: PostProps) {
           <img className="rounded-xl" src={review.thumbnail} alt="" />
           <SliderRating ratings={review.ratings} />
 
-          <div className="mt-4">
+          <div className="mt-4 ">
             <div className="flex items-center gap-1">
               <ChatTeardropDots
                 size={20}
                 weight="fill"
                 className="text-zinc-400"
               />
-              <ul className="flex">
-                {review.comments.length > 0 ? (
-                  review.comments.map((comment, index) => (
-                    <li
-                      key={comment.id}
-                      style={{
-                        transform: `translateX(-${index * 15}px)`,
-                      }}
-                    >
-                      <Avatar className="w-8 h-8 border-zinc-950 border-4">
-                        <AvatarImage
-                          className="object-cover"
-                          src={comment.user.avatar_url}
-                        />
-                        <AvatarFallback>LF</AvatarFallback>
-                      </Avatar>
-                    </li>
-                  ))
-                ) : (
-                  <small className="text-zinc-400">Nenhum comentário</small>
-                )}
-              </ul>
+              <span className='text-zinc-300'>
+                {review.comments.length}
+              </span>
             </div>
           </div>
         </CardContent>
