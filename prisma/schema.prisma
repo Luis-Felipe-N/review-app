@@ -90,7 +90,7 @@ model Comment {
   review    Review @relation(fields: [review_id], references: [id])
   review_id String
 
-  reply    Comment? @relation("commentReplys", fields: [reply_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  reply    Comment? @relation("commentReplys", fields: [reply_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
   reply_id String?
 
   replys Comment[] @relation("commentReplys")
