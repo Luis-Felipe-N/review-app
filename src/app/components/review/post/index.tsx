@@ -15,7 +15,7 @@ interface PostProps {
 export function Post({ review }: PostProps) {
   return (
     <Link href={`/review/${review.id}/`}>
-      <Card className="w-96 rounded-2xl border-zinc-900 hover:border-purple-600 border-2">
+      <Card className="rounded-2xl border-zinc-900 hover:border-purple-600 border-2">
         <CardHeader className="flex gap-2 flex-row">
           <Avatar className="w-12 h-12">
             <AvatarImage src={review.user.avatar_url} />

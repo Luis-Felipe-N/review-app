@@ -14,17 +14,17 @@ import { Card, CardContent } from '../../ui/card'
 import { Skeleton } from '../../ui/skeleton'
 import { Textarea } from '../../ui/textarea'
 import { useToast } from '../../ui/use-toast'
-import { CommentItem } from './CommentItem'
+import { CommentItem } from './comments-items'
 
 interface CommentsProps {
   review: Review
 }
 
-const commentFormShema = z.object({
+const commentFormSchema = z.object({
   content: z.string(),
 })
 
-type CommentFormData = z.infer<typeof commentFormShema>
+type CommentFormData = z.infer<typeof commentFormSchema>
 
 export function Comments({ review }: CommentsProps) {
   const session = useSession()
@@ -37,7 +37,7 @@ export function Comments({ review }: CommentsProps) {
     watch,
     formState: { isSubmitting },
   } = useForm<CommentFormData>({
-    resolver: zodResolver(commentFormShema),
+    resolver: zodResolver(commentFormSchema),
   })
 
   const {
@@ -78,7 +78,7 @@ export function Comments({ review }: CommentsProps) {
   const content = watch('content')
 
   return (
-    <Card className=" bg-zinc-900 rounded-xl">
+    <Card className="lg:w-96 bg-zinc-900 rounded-xl">
       <CardContent className="pt-5">
         <form onSubmit={handleSubmit(handleCreateComment)}>
           <label className="space-y-2">

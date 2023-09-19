@@ -1,4 +1,4 @@
-import { Header } from '@/app/components/Header'
+import { Header } from '@/app/components/header'
 import { ThemeProvider } from '@/app/components/theme-provider'
 import { QueryProvider } from './provider/useQueryProvider'
 import NextAuthSessionProvider from './provider/sessionProvider'

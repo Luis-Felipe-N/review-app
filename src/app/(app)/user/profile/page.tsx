@@ -1,7 +1,7 @@
 'use client'
 
 import { Review } from '@/@types'
-import { Post } from '@/app/components/review/Post'
+import { Post } from '@/app/components/review/post'
 import { apiClient } from '@/lib/api'
 import { useQuery } from '@tanstack/react-query'
 

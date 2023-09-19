@@ -23,9 +23,11 @@ export function Header() {
   return (
     <header className="bg-zinc-900">
       <div className="container mx-auto h-20 flex items-center justify-between">
+        <Link href={'/'}>
         <h1 className="text-xl font-semibold">Deep_review</h1>
+        </Link>
 
-        <NavigationMenu>
+        <NavigationMenu className='hidden lg:block'>
           <NavigationMenuList className="space-x-6">
             <NavigationMenuItem>
               <Link href="/" legacyBehavior passHref>
@@ -58,7 +60,6 @@ export function Header() {
         </NavigationMenu>
 
         <div className="flex space-x-4 items-center">
-          <Search />
           {session.status == 'authenticated' ? (
             <>
               <DropdownUser />

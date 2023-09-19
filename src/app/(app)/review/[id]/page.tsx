@@ -1,7 +1,7 @@
 import { Review } from '@/@types'
-import { Comments } from '@/app/components/review/Comments'
-import { GridImages } from '@/app/components/review/GridImages'
-import { Rating } from '@/app/components/review/Rating'
+import { Comments } from '@/app/components/review/comments'
+import { GridImages } from '@/app/components/review/grid-images'
+import { Rating } from '@/app/components/review/rating'
 import { api } from '@/lib/api'
 
 import { AxiosError } from 'axios'
@@ -41,7 +41,7 @@ export default async function Review({ params }: { params: { id: string } }) {
       <div className="w-full">
         <GridImages review={review} />
         <div className="p-4 mt-4 bg-zinc-900 rounded-xl">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <h1 className="text-xl">{review.title}</h1>
             <Rating review={review} />
           </div>

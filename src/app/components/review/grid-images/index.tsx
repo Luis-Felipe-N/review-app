@@ -37,10 +37,9 @@ export function GridImages({ review }: GridImagesProps) {
     setCurrentImage(image)
   }
 
-  return (
-    <div className={!(album instanceof Error) ? '' : 'h-[700px]'}>
-      {album instanceof Error ? (
-        <div className="flex flex-col justify-center items-center w-full">
+  if (album instanceof Error) {
+    return (
+      <div className="flex flex-col justify-center items-center w-full">
           <Image
             alt="Monstro roxo com cabeça aberta saindo um pó verde. Cara de tonto e escrito 404 no rosto."
             src={error404}
@@ -57,10 +56,54 @@ export function GridImages({ review }: GridImagesProps) {
             </a>
           </h1>
         </div>
-      ) : album ? (
-        <div className='flex flex-col-reverse lg:flex-row gap-4'>
-          <ScrollArea className="h-full min-w-28" scrollHideDelay={0}>
-            <ul className="flex lg:flex-col gap-1 w-full ">
+    )
+  }
+
+  if (!album) {
+    return (
+      <>
+      <ScrollArea className="h-full flex-shrink-1">
+        <div className="flex flex-col gap-2">
+          <Skeleton className="h-28 w-28 rounded" />
+          <Skeleton className="h-28 w-28 rounded" />
+          <Skeleton className="h-28 w-28 rounded" />
+          <Skeleton className="h-28 w-28 rounded" />
+          <Skeleton className="h-28 w-28 rounded" />
+          <Skeleton className="h-28 w-28 rounded" />
+          <Skeleton className="h-28 w-28 rounded" />
+        </div>
+      </ScrollArea>
+      <div className="flex-1 w-full h-full">
+        {currentImage && (
+          <img
+            className="w-full aspect-video rounded-xl"
+            src={currentImage.link}
+            alt=""
+          />
+        )}
+        <Skeleton className="w-full h-full rounded" />
+      </div>
+    </>
+    )
+  }
+
+  return (
+    <div className=''>
+      <div className='flex items-stretch flex-col gap-4 h-full'>
+          <div className='w-ful h-full'>
+            {currentImage && (
+              <Image
+              width={3840}
+                height={700}
+                className="object-cover block max-h-full w-full rounded"
+                src={currentImage.link}
+                alt=""
+              />
+            )}
+          </div>
+
+          <ScrollArea className="min-w-28" scrollHideDelay={0}>
+            <ul className="flex gap-1 w-full">
               {album &&
                 album.images.map((image) => (
                   <li
@@ -68,8 +111,8 @@ export function GridImages({ review }: GridImagesProps) {
                     onClick={() => handleChangeCurrentImage(image)}
                     className={
                       currentImage?.id == image.id
-                        ? 'border-2 border-purple-500 rounded overflow-hidden'
-                        : 'border-2 border-transparent rounded overflow-hidden cursor-pointer'
+                        ? 'border-2 shrink-0 border-purple-500 rounded overflow-hidden'
+                        : 'border-2 shrink-0 border-transparent rounded overflow-hidden cursor-pointer'
                     }
                   >
                     <Image
@@ -77,47 +120,13 @@ export function GridImages({ review }: GridImagesProps) {
                       alt=""
                       width={100}
                       height={100}
-                      className="h-28 w-28"
+                      className="lg:h-28 lg:w-28 h-20 w-20"
                     />
                   </li>
                 ))}
             </ul>
           </ScrollArea>
-          <div className='w-full'>
-            {currentImage && (
-              <img
-                className="object-cover block w-full h-full rounded"
-                src={currentImage.link}
-                alt=""
-              />
-            )}
-          </div>
         </div>
-      ) : (
-        <>
-          <ScrollArea className="h-full flex-shrink-1">
-            <div className="flex flex-col gap-2">
-              <Skeleton className="h-28 w-28 rounded" />
-              <Skeleton className="h-28 w-28 rounded" />
-              <Skeleton className="h-28 w-28 rounded" />
-              <Skeleton className="h-28 w-28 rounded" />
-              <Skeleton className="h-28 w-28 rounded" />
-              <Skeleton className="h-28 w-28 rounded" />
-              <Skeleton className="h-28 w-28 rounded" />
-            </div>
-          </ScrollArea>
-          <div className="flex-1 w-full h-full">
-            {currentImage && (
-              <img
-                className="w-full rounded-xl"
-                src={currentImage.link}
-                alt=""
-              />
-            )}
-            <Skeleton className="w-full h-full rounded" />
-          </div>
-        </>
-      )}
     </div>
   )
 }
