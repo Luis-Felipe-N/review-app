@@ -21,6 +21,7 @@ import { apiClient } from '@/lib/api'
 import { useSession } from 'next-auth/react'
 import { AxiosError } from 'axios'
 import { useToast } from '@/app/components/ui/use-toast'
+import error from 'next/error'
 
 const preProductFormShema = z.object({
   name: z.string().nonempty({ message: 'Nome é obrigatorio' }),
@@ -69,6 +70,7 @@ export function FormCreateReview() {
       })
       router.push(`/review/${responseData.data.review.id}/complete`)
     } catch (error) {
+      console.log(error)
       const message =
         error instanceof AxiosError
           ? error.response?.data.message

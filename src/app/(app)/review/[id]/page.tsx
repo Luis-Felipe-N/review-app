@@ -37,21 +37,25 @@ export default async function Review({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="flex container mx-auto min-h-full justify-center py-12 gap-4 lg:flex-row flex-col">
-      <div className="w-full">
+    <div className="container w-full mx-auto min-h-full py-12 gap-4 grid lg:grid-cols-[1fr_24rem]">
+      <div className="w-full flex-1">
         <GridImages review={review} />
-        <div className="p-4 mt-4 bg-zinc-900 rounded-xl">
+        <div className="p-8 mt-4 bg-zinc-900 rounded-xl">
           <div className="flex items-center justify-between flex-wrap gap-4">
-            <h1 className="text-xl">{review.title}</h1>
+            <h1 className="text-3xl">{review.title}</h1>
             <Rating review={review} />
           </div>
-          <div className="mt-1">
-            <strong>Comentário sobre o produto</strong>
+          <div>
+            <strong>Batch: {review.bacth || '??'}</strong>
+            
+            <strong className='block'>￥{review.price}</strong>
+          </div>
+          <div className="mt-2">
             <p className="text-zinc-200">{review.description}</p>
           </div>
-          <span className="block mt-1">
+          <span className="block mt-2">
             <strong>Link:</strong>{' '}
-            <a className="underline text-blue-500" href={review.link}>
+            <a className="underline text-purple-300" href={review.link}>
               {review.link}
             </a>
           </span>

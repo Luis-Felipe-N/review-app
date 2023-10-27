@@ -29,7 +29,7 @@ export function Post({ review }: PostProps) {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <img className="rounded-xl" src={review.thumbnail} alt="" />
+          <img className="rounded-xl" src={review.thumbnail} alt="Imagem" />
           <SliderRating ratings={review.ratings} />
 
           <div className="mt-4 ">

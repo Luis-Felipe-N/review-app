@@ -78,7 +78,7 @@ export function Comments({ review }: CommentsProps) {
   const content = watch('content')
 
   return (
-    <Card className="lg:w-96 bg-zinc-900 rounded-xl">
+    <Card className="w-full bg-zinc-900 rounded-xl">
       <CardContent className="pt-5">
         <form onSubmit={handleSubmit(handleCreateComment)}>
           <label className="space-y-2">

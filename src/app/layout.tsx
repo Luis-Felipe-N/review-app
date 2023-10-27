@@ -6,6 +6,15 @@ import { Toaster } from './components/ui/toaster'
 import { Metadata } from 'next'
 import './global.css'
 
+
+import { Poppins } from 'next/font/google'
+
+const openSans = Poppins({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['100', '400', '500', '700', '800', '900']
+})
+
 export const metadata: Metadata = {
   title: 'Inicio | DeepReview',
   description:
@@ -19,7 +28,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body>
+      <body className={openSans.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <NextAuthSessionProvider>
             <QueryProvider>
